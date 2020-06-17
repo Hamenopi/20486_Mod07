@@ -14,17 +14,33 @@ namespace Cupcakes.Controllers
 {
     public class CupcakeController : Controller
     {
-        private IHostingEnvironment _environment;
         private ICupcakeRepository _repository;
+        private IHostingEnvironment _environment;
         public CupcakeController(ICupcakeRepository cupcakeRepository, IHostingEnvironment environment)
         {
-            _repository = cupcakeRepository;
             _environment = environment;
+            _repository = cupcakeRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_repository.GetCupcakes());
+        }
+
+        public IActionResult Detail(int id)
+        {
+            var cupcake = _repository.GetCupcakeById(id);
+            if (cupcake == null)
+            {
+                return NotFound();
+            }
+            return View(cupcake);
+        }
+
+        private void PopulateBakeriesDropDownList(int? selectedBakery = null)
+        {
+            var bakeries = _repository.PopulateBakeriesDropDownList();
+            ViewBag.BakeryID = new SelectList(bakeries.AsNoTracking(), "BakeryId", "BakeryName", selectedBakery);
         }
 
         public IActionResult GetImage(int id)
