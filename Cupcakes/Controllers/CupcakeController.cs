@@ -3,12 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Cupcakes.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Cupcakes.Repositories;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cupcakes.Controllers
 {
     public class CupcakeController : Controller
     {
+        private IHostingEnvironment _environment;
+        private ICupcakeRepository _repository;
+        public CupcakeController(ICupcakeRepository cupcakeRepository, IHostingEnvironment environment)
+        {
+            _repository = cupcakeRepository;
+            _environment = environment;
+        }
+
         public IActionResult Index()
         {
             return View();
