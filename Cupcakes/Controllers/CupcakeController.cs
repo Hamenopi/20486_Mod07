@@ -27,7 +27,7 @@ namespace Cupcakes.Controllers
             return View(_repository.GetCupcakes());
         }
 
-        public IActionResult Detail(int id)
+        public IActionResult Details(int id)
         {
             var cupcake = _repository.GetCupcakeById(id);
             if (cupcake == null)
@@ -41,6 +41,81 @@ namespace Cupcakes.Controllers
         {
             var bakeries = _repository.PopulateBakeriesDropDownList();
             ViewBag.BakeryID = new SelectList(bakeries.AsNoTracking(), "BakeryId", "BakeryName", selectedBakery);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            PopulateBakeriesDropDownList();
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("Create")]
+        public IActionResult CreatePost(Cupcake cupcake)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.CreateCupcake(cupcake);
+                return RedirectToAction(nameof(Index));
+            }
+            PopulateBakeriesDropDownList(cupcake.BakeryId);
+            return View(cupcake);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var cupcake = _repository.GetCupcakeById(id);
+            if (cupcake == null)
+            {
+                return NotFound();
+            }
+            PopulateBakeriesDropDownList(cupcake.BakeryId);
+            return View(cupcake);
+        }
+
+        [HttpPost]
+        [ActionName("Edit")]
+        public async Task<IActionResult> EditPost(int id)
+        {
+            var cupcakeToUpdate = _repository.GetCupcakeById(id);
+            var isUpdated = await TryUpdateModelAsync<Cupcake>(
+                cupcakeToUpdate,
+                "",
+                c => c.BakeryId,
+                c => c.CupcakeType,
+                c => c.Description,
+                c => c.GlutenFree,
+                c => c.Price);
+
+            if (isUpdated)
+            {
+                _repository.SaveChanges();
+                RedirectToAction(nameof(Index));
+            }
+
+            PopulateBakeriesDropDownList(cupcakeToUpdate.BakeryId);
+            return View(cupcakeToUpdate);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var cupcake = _repository.GetCupcakeById(id);
+            if (cupcake == null)
+            {
+                return NotFound();
+            }
+            return View(cupcake);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _repository.DeleteCupcake(id);
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult GetImage(int id)
