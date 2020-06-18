@@ -60,8 +60,8 @@ namespace Cupcakes.Data
                     Price = 2.5,
                     BakeryId = 1,
                     ImageMimeType = "image/jpeg",
-                    ImageName = "birthday-cupcake.jpg"//,
-                    //CaloricValue = 355
+                    ImageName = "birthday-cupcake.jpg",
+                    CaloricValue = 355
                 },
                 new Cupcake
                 {
@@ -72,8 +72,8 @@ namespace Cupcakes.Data
                     Price = 3.2,
                     BakeryId = 2,
                     ImageMimeType = "image/jpeg",
-                    ImageName = "chocolate-cupcake.jpg"//,
-                    //CaloricValue = 195
+                    ImageName = "chocolate-cupcake.jpg",
+                    CaloricValue = 195
                 },
                 new Cupcake
                 {
@@ -84,8 +84,8 @@ namespace Cupcakes.Data
                     Price = 4,
                     BakeryId = 3,
                     ImageMimeType = "image/jpeg",
-                    ImageName = "pink-cupcake.jpg"//,
-                    //CaloricValue = 295
+                    ImageName = "pink-cupcake.jpg",
+                    CaloricValue = 295
                 },
                 new Cupcake
                 {
@@ -96,8 +96,8 @@ namespace Cupcakes.Data
                     Price = 1.5,
                     BakeryId = 4,
                     ImageMimeType = "image/jpeg",
-                    ImageName = "turquoise-cupcake.jpg"//,
-                    //CaloricValue = 360
+                    ImageName = "turquoise-cupcake.jpg",
+                    CaloricValue = 360
                 }
             );
         }
